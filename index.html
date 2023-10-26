@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <title>Get Phone number information by number</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+
+        }
+
+        body {
+            overflow-x: hidden;
+            background-color: darkorchid;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: darkorchid;
+            border-radius: 26px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .container input {
+            font-size: 18px;
+            border: 2px solid blueviolet;
+            padding: 7px;
+            border-radius: 2px;
+        }
+
+        .container input[type="submit"] {
+            background-color: rgb(132, 0, 255);
+            cursor: pointer;
+            color: white;
+        }
+.container button{
+    background-color: rgb(132, 0, 255);
+            cursor: pointer;
+            color: white;
+            font-size: 18px;
+            border: 2px solid blueviolet;
+            padding: 7px;
+            border-radius: 2px;
+}
+        #number {
+            width: 320px;
+        }
+
+        ::placeholder {
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        main {
+            margin-top: 8%;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            font-size: 18px;
+    font-weight: 800;
+    color:white;
+        }
+        @media screen and (max-width: 390px) {
+
+ .container{
+    flex-direction: column;
+
+ }
+ .container input{
+   margin: auto;
+ }
+ .container button{
+    margin: 12px auto;
+    width: 40%;
+    
+ }
+
+ }
+ @media screen and (max-width: 360px) {
+
+
+    main {
+            margin-top: 8%;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            font-size: 16px;
+    font-weight: 800;
+    color:white;
+        }
+
+}
+@media screen and (max-width: 300px) {
+
+
+main {
+        margin-top: 8%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        font-size: 12px;
+font-weight: 800;
+color:white;
+    }
+
+}
+@media screen and (max-width: 280px) {
+
+
+main {
+        margin-top: 8%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        font-size: 9px;
+font-weight: 800;
+color:white;
+    }
+
+}
+ 
+    </style>
+</head>
+
+<body>
+    <div class="container">
+      
+            <input id="number" required autocomplete="off" type="number"
+                placeholder="Enter mobile number with country code">
+            <button id="btn" type="button">Submit</button>
+        
+    </div>
+    <main id="main">
+      
+    </main>
+</body>
+<script>
+    let main = document.getElementById('main');
+    let number = document.getElementById('number');
+    // let n = number.value;
+    let btn=document.getElementById('btn');
+
+    async function valiDate(query) {
+        const r = await fetch(`http://apilayer.net/api/validate?access_key=06e67f1e3e117f7d9d936a92d390dac5&number=${query}`);
+        const d = await r.json();
+        main.innerHTML="";
+        if (d.valid == true) {
+            main.innerHTML += `
+  <p>Country Name:${d.country_name}</p>
+   <br>
+   <p>Location:${d.location}</p>
+   <br>
+   <p>number:${d.number}</p>
+   <br>
+   <p>Carrier:${d.carrier}</p>`;
+
+        }
+        else{
+            main.innerHTML="No data found";
+        }
+    }
+    btn.addEventListener('click',()=>{
+        valiDate(number.value);
+        
+    })
+    
+
+</script>
+
+</html>
